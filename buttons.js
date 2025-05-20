@@ -28,11 +28,10 @@ function startGame() {
         // Mostrar la pantalla del joc
         document.getElementById('gameScreen').style.display = 'flex';
 
-        // Esperar 20 segons i després mostrar el correu electrònic
         setTimeout(function() {
             document.getElementById('gameScreen').style.display = 'none';
             showPhishingEmail();
-        }, 20000);  // 20000 mil·lisegons = 20 segons
+        }, 5000); 
     } else {
         alert("Si us plau, introdueix un nickname.");
     }
@@ -44,25 +43,52 @@ function showPhishingEmail() {
     emailScreen.innerHTML = `
         <div class="email-container">
             <div class="email-header">
-                <div class="email-from">
+                <div class="email-from suspicious" onclick="toggleSuspicious(this)">
                     <strong>De:</strong> "Suport Oficial" <support@fakeemail.com>
                 </div>
-                <div class="email-subject">
+                <div class="email-subject suspicious" onclick="toggleSuspicious(this)">
                     <strong>Assumpte:</strong> Urgent: El teu compte ha estat bloquejat!
-                </div>
-                <div class="email-date">
-                    12 maig 2025
                 </div>
             </div>
             <div class="email-body">
-                <p>Hola, hem detectat activitat sospitosa al teu compte. Per evitar que el teu compte sigui suspès, si us plau, fes clic en l'enllaç següent per restablir la teva contrasenya immediatament.</p>
-                <p><a href="#">Restablir contrasenya</a></p>
+                <p>Hola, hem detectat <span class="suspicious" onclick="toggleSuspicious(this)">activitat sospitosa</span> al teu compte. Per evitar que el teu compte sigui suspès, si us plau, fes clic en l'enllaç següent per restablir la teva contrasenya immediatament.</p>
+                <p><a href="#" class="suspicious" onclick="toggleSuspicious(this)">Restablir contrasenya</a></p>
                 <p>Gràcies per la teva col·laboració.</p>
             </div>
-            <button onclick="continueGame()">Continuar Joc</button>
+            <button onclick="validateSelections()">Validar Seleccions</button>
         </div>
     `;
     document.body.appendChild(emailScreen);
+}
+
+// Funció per canviar l'estil al clicar i marcar/desmarcar
+function toggleSuspicious(element) {
+    element.classList.toggle('marked-suspicious');
+}
+
+// Funció per validar les seleccions fetes
+function validateSelections() {
+    // Selecciona tots els elements sospitosos predefinits
+    const correctSuspicious = document.querySelectorAll('.suspicious');
+
+    // Selecciona tots els elements marcats com a sospitosos
+    const marked = document.querySelectorAll('.marked-suspicious');
+
+    // Comptador d'encerts
+    let correctCount = 0;
+
+    marked.forEach(el => {
+        if (el.classList.contains('suspicious')) {
+            correctCount++;
+        }
+    });
+
+    // Mostra el resultat
+    if (correctCount === correctSuspicious.length) {
+        alert("Perfecte! Has identificat tots els elements sospitosos.");
+    } else {
+        alert(`Has identificat ${correctCount} de ${correctSuspicious.length} correctament. Torna-ho a intentar.`);
+    }
 }
 
 function continueGame() {
