@@ -19,19 +19,17 @@ function startGame() {
         document.getElementById("scoreDisplay").innerText = localStorage.getItem("score");
         document.getElementById("livesDisplay").innerText = localStorage.getItem("lives");
 
-        // Amagar la pantalla d'inici
         document.querySelector('header').style.display = 'none';
         document.querySelector('.main-content').style.display = 'none';
         document.querySelector('footer').style.display = 'none';
-        document.getElementById('introSection').style.display = 'none'; // Amagar la secció d'introducció
-        
-        // Mostrar la pantalla del joc
+        document.getElementById('introSection').style.display = 'none';
+
         document.getElementById('gameScreen').style.display = 'flex';
 
         setTimeout(function() {
             document.getElementById('gameScreen').style.display = 'none';
             showPhishingEmail();
-        }, 5000); 
+        }, 5000);
     } else {
         alert("Si us plau, introdueix un nickname.");
     }
@@ -43,52 +41,54 @@ function showPhishingEmail() {
     emailScreen.innerHTML = `
         <div class="email-container">
             <div class="email-header">
-                <div class="email-from suspicious" onclick="toggleSuspicious(this)">
-                    <strong>De:</strong> "Suport Oficial" <support@fakeemail.com>
+                <div data-suspicious="true">
+                    <strong>De:</strong> "Suport Oficial" &lt;support@fakeemail.com&gt;
                 </div>
-                <div class="email-subject suspicious" onclick="toggleSuspicious(this)">
+                <div data-suspicious="true">
                     <strong>Assumpte:</strong> Urgent: El teu compte ha estat bloquejat!
                 </div>
             </div>
             <div class="email-body">
-                <p>Hola, hem detectat <span class="suspicious" onclick="toggleSuspicious(this)">activitat sospitosa</span> al teu compte. Per evitar que el teu compte sigui suspès, si us plau, fes clic en l'enllaç següent per restablir la teva contrasenya immediatament.</p>
-                <p><a href="#" class="suspicious" onclick="toggleSuspicious(this)">Restablir contrasenya</a></p>
+                <p>Hola, hem detectat <span data-suspicious="true">activitat sospitosa</span> al teu compte. Per evitar que el teu compte sigui suspès, si us plau, fes clic en l'enllaç següent per restablir la teva contrasenya immediatament.</p>
+                <p><a href="#" data-suspicious="true">Restablir contrasenya</a></p>
                 <p>Gràcies per la teva col·laboració.</p>
             </div>
             <button onclick="validateSelections()">Validar Seleccions</button>
         </div>
     `;
     document.body.appendChild(emailScreen);
+
+    const container = emailScreen.querySelector('.email-container');
+    container.addEventListener('click', (event) => {
+        if (event.target !== container) {
+            event.target.classList.toggle('marked-suspicious');
+        }
+    });
 }
 
-// Funció per canviar l'estil al clicar i marcar/desmarcar
-function toggleSuspicious(element) {
-    element.classList.toggle('marked-suspicious');
-}
-
-// Funció per validar les seleccions fetes
 function validateSelections() {
-    // Selecciona tots els elements sospitosos predefinits
-    const correctSuspicious = document.querySelectorAll('.suspicious');
+    const correctElements = document.querySelectorAll('[data-suspicious="true"]');
+    const markedElements = document.querySelectorAll('.marked-suspicious');
 
-    // Selecciona tots els elements marcats com a sospitosos
-    const marked = document.querySelectorAll('.marked-suspicious');
+    let correct = 0;
+    let incorrect = 0;
+    let missed = 0;
 
-    // Comptador d'encerts
-    let correctCount = 0;
-
-    marked.forEach(el => {
-        if (el.classList.contains('suspicious')) {
-            correctCount++;
+    markedElements.forEach(el => {
+        if (el.hasAttribute('data-suspicious')) {
+            correct++;
+        } else {
+            incorrect++;
         }
     });
 
-    // Mostra el resultat
-    if (correctCount === correctSuspicious.length) {
-        alert("Perfecte! Has identificat tots els elements sospitosos.");
-    } else {
-        alert(`Has identificat ${correctCount} de ${correctSuspicious.length} correctament. Torna-ho a intentar.`);
-    }
+    correctElements.forEach(el => {
+        if (!el.classList.contains('marked-suspicious')) {
+            missed++;
+        }
+    });
+
+    alert(`Has marcat correctament ${correct} elements sospitosos.\nHas marcat ${incorrect} elements incorrectes.\nHas oblidat marcar ${missed} elements sospitosos.`);
 }
 
 function continueGame() {
