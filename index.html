@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Phishlab</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <header>
         <h1>Phishlab</h1>
         <p>Benvingut al simulador de phishing educatiu</p>
     </header>
+
+    <div id="nicknameBanner" style="display:none;"></div>
 
     <main>
         <section id="introSection">
@@ -32,14 +34,14 @@
         <p>&copy; 2025 Phishlab</p>
     </footer>
 
-    <div id="gameScreen" style="display: none;">
-        <div class="game-info">
-            <h2>Nivell 1</h2>
-            <p id="nicknameDisplay"></p>
-            <p>Puntuació: <span id="scoreDisplay">0</span></p>
-            <p>Vides: <span id="livesDisplay">3</span></p>
-        </div>
+<div id="gameScreen" style="display: none;">
+    <div class="game-info">
+        <h2>Nivell 1</h2>
+        <p id="nicknameDisplay"></p>
+        <p>Puntuació: <span id="scoreDisplay">0</span></p>
+        <p>Vides: <span id="livesDisplay" class="lives">3</span></p>
     </div>
+</div>
 
     <script src="buttons.js"></script>
 </body>

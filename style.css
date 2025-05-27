@@ -14,6 +14,7 @@ header, footer {
 
 h1, h2 {
     margin: 10px 0;
+    color: #333;
 }
 
 p {
@@ -25,13 +26,16 @@ main {
     margin: 20px auto;
 }
 
-.main-content {
-    text-align: center;
-    margin: 20px 0;
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.buttons button {
-    margin: 10px;
+.buttons button, button {
+    margin: 0;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -39,13 +43,14 @@ main {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.buttons button:hover {
+.buttons button:hover, button:hover {
     background-color: #0056b3;
 }
 
-.buttons button:active {
+.buttons button:active, button:active {
     background-color: #004085;
 }
 
@@ -55,8 +60,20 @@ main {
     height: 100vh;
     width: 100vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+#gameScreen h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#gameScreen p {
+    font-size: 1.2rem;
+    margin: 5px 0;
 }
 
 .hide-others {
@@ -82,7 +99,7 @@ main {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 100%;
+    max-width: 90%;
     overflow: hidden;
     font-size: 14px;
     color: #333;
@@ -94,21 +111,14 @@ main {
     margin-bottom: 10px;
 }
 
-.email-from {
+.email-header div {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.email-from, .email-subject {
     font-weight: bold;
     color: #3c4043;
-}
-
-.email-subject {
-    font-size: 16px;
-    color: #5f6368;
-    margin-top: 5px;
-}
-
-.email-date {
-    font-size: 12px;
-    color: #9e9e9e;
-    margin-top: 5px;
 }
 
 .email-body {
@@ -116,6 +126,10 @@ main {
     font-size: 14px;
     color: #202124;
     line-height: 1.6;
+}
+
+.email-body p {
+    margin-bottom: 10px;
 }
 
 .email-body a {
@@ -137,7 +151,7 @@ main {
     border: 1px solid red;
 }
 
-button {
+.email-container button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #007bff;
@@ -147,12 +161,72 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.email-container button:hover {
     background-color: #0056b3;
 }
+
+#nicknameForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #007bff;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1000;
+}
+
+#nicknameForm input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    width: 80%;
+}
+
+#nicknameForm button {
+    background-color: #0056b3;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#nicknameForm button:hover {
+    background-color: #004085;
+}
+
+#nicknameBanner {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 10px auto 20px auto;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 
 @media (max-width: 768px) {
     .email-container {
         width: 90%;
+        padding: 15px;
+    }
+
+    #gameScreen h1 {
+        font-size: 2rem;
+    }
+
+    #gameScreen p {
+        font-size: 1rem;
     }
 }
